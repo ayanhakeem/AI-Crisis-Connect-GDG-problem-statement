@@ -1,6 +1,6 @@
-# 🛡️ CrisisConnect: Cinematic Emergency Intelligence
+    # 🛡️ CrisisConnect: Cinematic Emergency Intelligence
 
-**CrisisConnect** is a high-performance, AI-driven emergency dispatch and management platform specifically engineered for the luxury hospitality industry. It replaces fragmented communication with a unified, "Cinematic High-Performance" command center that ensures every second counts when safety is on the line.
+**CrisisConnect** is a high-performance, AI-driven emergency dispatch and management platform specifically engineered for the luxury hospitality and hotel industry. It replaces fragmented communication with a unified, "Cinematic High-Performance" command center that ensures every second counts when safety is on the line.
 
 ---
 
