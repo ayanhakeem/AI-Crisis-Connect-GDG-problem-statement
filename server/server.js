@@ -17,10 +17,7 @@ const server = http.createServer(app);
 // Socket.io setup
 const io = new Server(server, {
   cors: {
-    origin: [
-      'http://localhost:5173',
-      process.env.CLIENT_URL
-    ].filter(Boolean),
+    origin: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     credentials: true,
   },
@@ -31,19 +28,8 @@ app.set('io', io);
 initSocket(io);
 
 // Middleware
-const allowedOrigins = [
-  'http://localhost:5173',
-  process.env.CLIENT_URL,
-].filter(Boolean);
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new Error('The CORS policy for this site does not allow access.'), false);
-    }
-    return callback(null, true);
-  },
+  origin: true, // Automatically allow the origin that is making the request
   credentials: true,
 }));
 app.use(express.json());
