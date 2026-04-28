@@ -9,8 +9,9 @@ const AI_MODEL = 'llama-3.3-70b-versatile'; // High-performance Groq model
 /**
  * Analyze an emergency using AI (via Groq)
  */
-const analyzeEmergency = async (type, description, location) => {
+const analyzeEmergency = async (type, title, description, location) => {
   try {
+    const context = `${title}${description ? ': ' + description : ''}`;
     const locationStr = location
       ? `Room: ${location.room || 'N/A'}, Floor: ${location.floor || 'N/A'}, Area: ${location.area || 'N/A'}`
       : 'Location not specified';
@@ -26,7 +27,7 @@ const analyzeEmergency = async (type, description, location) => {
 }
 
 Emergency Type: ${type}
-Description: ${description || 'No description provided'}
+Context: ${context || 'No specific details provided'}
 Location: ${locationStr}
 
 Respond with ONLY the JSON object. No explanation, no markdown fences.`;
@@ -36,7 +37,10 @@ Respond with ONLY the JSON object. No explanation, no markdown fences.`;
       {
         model: AI_MODEL,
         messages: [
-          { role: 'system', content: 'You are an emergency response expert. Always output JSON.' },
+          { 
+            role: 'system', 
+            content: 'You are an emergency response expert. Always output strictly JSON. Use ONLY the provided context and location. If a location detail (like room number) is not provided, do NOT hallucinate or invent one. Instead, use terms like "the reported location" or "affected area".' 
+          },
           { role: 'user', content: prompt }
         ],
         temperature: 0,
@@ -140,6 +144,7 @@ const generatePostMortem = async (emergencyData) => {
 }
 
 Emergency Type: ${emergencyData.type}
+Emergency Title: ${emergencyData.title}
 Total Duration: ${durationMins} minutes
 Timeline Actions: ${timeline}
 

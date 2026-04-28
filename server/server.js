@@ -27,9 +27,6 @@ const io = new Server(server, {
 app.set('io', io);
 initSocket(io);
 
-// Connect to MongoDB
-connectDB();
-
 // Middleware
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -59,8 +56,20 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Internal server error' });
 });
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 CrisisConnect Server running on port ${PORT}`);
-  console.log(`📡 Socket.io ready`);
-});
+const start = async () => {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+
+    const PORT = process.env.PORT || 5000;
+    server.listen(PORT, () => {
+      console.log(`🚀 CrisisConnect Server running on port ${PORT}`);
+      console.log(`📡 Socket.io ready`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+start();

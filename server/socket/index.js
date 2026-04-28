@@ -6,6 +6,11 @@ const initSocket = (io) => {
 
     // User joins and registers themselves
     socket.on('user:join', (userData) => {
+      if (!userData || !userData.userId) {
+        console.warn('⚠️ Received user:join with invalid data');
+        return;
+      }
+
       onlineUsers.set(socket.id, {
         socketId: socket.id,
         userId: userData.userId,

@@ -9,7 +9,7 @@ const createEmergency = async (req, res) => {
     const { type, title, description, location } = req.body;
 
     // Run AI analysis
-    const aiResult = await analyzeEmergency(type, description, location);
+    const aiResult = await analyzeEmergency(type, title, description, location);
 
     // Auto-suggest nearest available staff by department
     const suggestedStaff = await User.find({
